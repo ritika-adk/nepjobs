@@ -1,6 +1,8 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 function Register() {
+    const navigate = useNavigate()
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -25,7 +27,9 @@ function Register() {
       const data = await res.json()
       if (res.ok) {
         setMessage(data.message)
-        setError("")
+  setError("")
+  setTimeout(() => navigate("/"), 1500)
+        
       } else {
         setError(JSON.stringify(data))
         setMessage("")

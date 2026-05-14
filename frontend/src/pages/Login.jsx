@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -6,6 +7,8 @@ function Login() {
     password: "",
   })
   const [error, setError] = useState("")
+  const [message, setMessage] = useState("")
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -23,8 +26,9 @@ function Login() {
       if (res.ok) {
         localStorage.setItem("access", data.access)
         localStorage.setItem("refresh", data.refresh)
-        alert("Login successful! 🎉")
+        setMessage("Login successful! 🎉")
         setError("")
+        setTimeout(() => navigate("/"), 1500)
       } else {
         setError("Invalid username or password!")
       }
@@ -40,6 +44,12 @@ function Login() {
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
           Welcome Back 👋
         </h2>
+
+        {message && (
+          <div className="bg-green-100 text-green-700 p-3 rounded-lg mb-4">
+            {message}
+          </div>
+        )}
 
         {error && (
           <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-4">
@@ -84,7 +94,9 @@ function Login() {
 
         <p className="text-center text-gray-500 mt-4">
           Don't have an account?{" "}
-          <span className="text-blue-600 cursor-pointer hover:underline">
+          <span
+            onClick={() => navigate("/register")}
+            className="text-blue-600 cursor-pointer hover:underline">
             Register
           </span>
         </p>

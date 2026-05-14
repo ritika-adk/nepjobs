@@ -2,6 +2,9 @@ import { useState, useEffect } from "react"
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
+import PostJob from "./pages/PostJob"
+import ApplyJob from "./pages/ApplyJob"
+import Dashboard from "./pages/Dashboard"
 
 function Home() {
   const [jobs, setJobs] = useState([])
@@ -27,17 +30,27 @@ function Home() {
           NepJobs 💼
         </h1>
         <div className="flex gap-4">
-          <button
-            onClick={() => navigate("/login")}
-            className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100">
-            Login
-          </button>
-          <button
-            onClick={() => navigate("/register")}
-            className="bg-yellow-400 text-black px-4 py-2 rounded-lg font-semibold hover:bg-yellow-300">
-            Register
-          </button>
-        </div>
+  <button
+    onClick={() => navigate("/post-job")}
+    className="bg-green-400 text-black px-4 py-2 rounded-lg font-semibold hover:bg-green-300">
+    Post Job 📝
+  </button>
+  <button
+    onClick={() => navigate("/dashboard")}
+    className="bg-purple-400 text-white px-4 py-2 rounded-lg font-semibold hover:bg-purple-500">
+    Dashboard
+  </button>
+  <button
+    onClick={() => navigate("/login")}
+    className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100">
+    Login
+  </button>
+  <button
+    onClick={() => navigate("/register")}
+    className="bg-yellow-400 text-black px-4 py-2 rounded-lg font-semibold hover:bg-yellow-300">
+    Register
+  </button>
+</div>
       </nav>
 
       {/* Hero Section */}
@@ -92,7 +105,9 @@ function Home() {
                   <p>📅 Deadline: {job.deadline}</p>
                 </div>
 
-                <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-semibold">
+                <button
+                  onClick={() => navigate(`/apply/${job.id}`)}
+                  className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-semibold">
                   Apply Now
                 </button>
               </div>
@@ -114,10 +129,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/register" element={<Register />} />
+  <Route path="/post-job" element={<PostJob />} />
+  <Route path="/apply/:id" element={<ApplyJob />} />
+  <Route path="/dashboard" element={<Dashboard />} />
+</Routes>
     </BrowserRouter>
   )
 }
