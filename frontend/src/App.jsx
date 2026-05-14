@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react"
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom"
+import Register from "./pages/Register"
+import Login from "./pages/Login"
 
-function App() {
+function Home() {
   const [jobs, setJobs] = useState([])
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/jobs/")
@@ -18,13 +22,19 @@ function App() {
 
       {/* Navbar */}
       <nav className="bg-blue-600 text-white px-8 py-4 flex justify-between items-center shadow-lg">
-        <h1 className="text-2xl font-bold">NepJobs 💼</h1>
+        <h1 className="text-2xl font-bold cursor-pointer"
+          onClick={() => navigate("/")}>
+          NepJobs 💼
+        </h1>
         <div className="flex gap-4">
-          <button className="hover:underline">Browse Jobs</button>
-          <button className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100">
+          <button
+            onClick={() => navigate("/login")}
+            className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100">
             Login
           </button>
-          <button className="bg-yellow-400 text-black px-4 py-2 rounded-lg font-semibold hover:bg-yellow-300">
+          <button
+            onClick={() => navigate("/register")}
+            className="bg-yellow-400 text-black px-4 py-2 rounded-lg font-semibold hover:bg-yellow-300">
             Register
           </button>
         </div>
@@ -97,6 +107,18 @@ function App() {
       </footer>
 
     </div>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
