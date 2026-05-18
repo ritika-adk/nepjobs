@@ -152,9 +152,9 @@ function Dashboard() {
 
                 {app.cv && (
                   
-                    <a>href={`${API_URL}${app.cv}`}
+                    <a href={`${API_URL}${app.cv}`}
                     target="_blank"
-                    className="text-blue-600 text-sm hover:underline mt-2 block"
+                    className="text-blue-600 text-sm hover:underline mt-2 block">
                     📄 View CV
                   </a>
                 )}
