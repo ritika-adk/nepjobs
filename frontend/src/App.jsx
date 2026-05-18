@@ -5,6 +5,8 @@ import Login from "./pages/Login"
 import PostJob from "./pages/PostJob"
 import ApplyJob from "./pages/ApplyJob"
 import Dashboard from "./pages/Dashboard"
+import ForgotPassword from "./pages/ForgotPassword"
+import ResetPassword from "./pages/ResetPassword"
 
 function Home() {
   const [jobs, setJobs] = useState([])
@@ -350,6 +352,8 @@ function App() {
         <Route path="/post-job" element={<PostJob />} />
         <Route path="/apply/:id" element={<ApplyJob />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
       </Routes>
     </BrowserRouter>
   )

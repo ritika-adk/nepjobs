@@ -44,6 +44,28 @@ function Dashboard() {
       })
   }, [])
 
+  const updateStatus = async (appId, status) => {
+    const token = localStorage.getItem("access")
+    try {
+      const res = await fetch(`${API_URL}/api/jobs/${appId}/update-status/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ status })
+      })
+      if (res.ok) {
+        setApplications(applications.map(app =>
+          app.id === appId ? { ...app, status } : app
+        ))
+        alert(`Application ${status} successfully! 🎉`)
+      }
+    } catch (err) {
+      console.log("Error:", err)
+    }
+  }
+
   const handleLogout = () => {
     localStorage.removeItem("access")
     localStorage.removeItem("refresh")
@@ -150,13 +172,34 @@ function Dashboard() {
                   </p>
                 )}
 
-                {app.cv && (
+                {app.cv_url && (
                   
                     <a href={app.cv_url}
                     target="_blank"
+                    rel="noreferrer"
                     className="text-blue-600 text-sm hover:underline mt-2 block">
                     📄 View CV
                   </a>
+                )}
+
+                {role === "employer" && (
+                  <div className="flex gap-2 mt-3">
+                    <button
+                      onClick={() => updateStatus(app.id, 'accepted')}
+                      className="bg-green-500 text-white px-4 py-1 rounded-lg text-sm hover:bg-green-600">
+                      ✅ Accept
+                    </button>
+                    <button
+                      onClick={() => updateStatus(app.id, 'reviewed')}
+                      className="bg-yellow-500 text-white px-4 py-1 rounded-lg text-sm hover:bg-yellow-600">
+                      👁️ Reviewed
+                    </button>
+                    <button
+                      onClick={() => updateStatus(app.id, 'rejected')}
+                      className="bg-red-500 text-white px-4 py-1 rounded-lg text-sm hover:bg-red-600">
+                      ❌ Reject
+                    </button>
+                  </div>
                 )}
               </div>
             ))}
