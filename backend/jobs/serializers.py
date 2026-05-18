@@ -28,6 +28,7 @@ class JobSerializer(serializers.ModelSerializer):
 class ApplicationSerializer(serializers.ModelSerializer):
     job_title = serializers.SerializerMethodField()
     applicant_name = serializers.SerializerMethodField()
+    cv_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Application
@@ -38,6 +39,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
             'applicant',
             'applicant_name',
             'cv',
+            'cv_url',
             'cover_letter',
             'status',
             'applied_at',
@@ -49,3 +51,9 @@ class ApplicationSerializer(serializers.ModelSerializer):
 
     def get_applicant_name(self, obj):
         return obj.applicant.username
+
+    def get_cv_url(self, obj):
+        if obj.cv:
+            return obj.cv.url
+        return None
+        

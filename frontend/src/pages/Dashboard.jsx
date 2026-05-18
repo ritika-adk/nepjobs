@@ -152,7 +152,7 @@ function Dashboard() {
 
                 {app.cv && (
                   
-                    <a href={app.cv.startsWith('http') ? app.cv : `${API_URL}${app.cv}`}
+                    <a href={app.cv_url}
                     target="_blank"
                     className="text-blue-600 text-sm hover:underline mt-2 block">
                     📄 View CV

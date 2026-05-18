@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 
 class Job(models.Model):
     JOB_TYPE = [
@@ -43,7 +44,7 @@ class Application(models.Model):
 
     job          = models.ForeignKey(Job, on_delete=models.CASCADE)
     applicant    = models.ForeignKey(User, on_delete=models.CASCADE)
-    cv           = models.FileField(upload_to='cvs/')
+    cv           = CloudinaryField('cv', resource_type='raw', blank=True)
     cover_letter = models.TextField(blank=True)
     status       = models.CharField(max_length=20, choices=STATUS, default='pending')
     applied_at   = models.DateTimeField(auto_now_add=True)
