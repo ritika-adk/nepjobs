@@ -28,7 +28,7 @@ function PostJob() {
       return
     }
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/jobs/post/", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs/post/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

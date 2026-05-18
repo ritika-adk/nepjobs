@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
+const API_URL = import.meta.env.VITE_API_URL
+
 function Dashboard() {
   const [applications, setApplications] = useState([])
   const [loading, setLoading] = useState(true)
@@ -15,8 +17,7 @@ function Dashboard() {
       return
     }
 
-    // Get user profile
-    fetch("http://127.0.0.1:8000/api/accounts/profile/", {
+    fetch(`${API_URL}/api/accounts/profile/`, {
       headers: { "Authorization": `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -24,10 +25,9 @@ function Dashboard() {
         setRole(data.role)
         setUsername(data.username)
 
-        // Get applications based on role
         const url = data.role === "employer"
-          ? "http://127.0.0.1:8000/api/jobs/employer-applications/"
-          : "http://127.0.0.1:8000/api/jobs/my-applications/"
+          ? `${API_URL}/api/jobs/employer-applications/`
+          : `${API_URL}/api/jobs/my-applications/`
 
         return fetch(url, {
           headers: { "Authorization": `Bearer ${token}` }
@@ -152,9 +152,9 @@ function Dashboard() {
 
                 {app.cv && (
                   
-                    <a href={`http://127.0.0.1:8000${app.cv}`}
+                    <a>href={`${API_URL}${app.cv}`}
                     target="_blank"
-                    className="text-blue-600 text-sm hover:underline mt-2 block">
+                    className="text-blue-600 text-sm hover:underline mt-2 block"
                     📄 View CV
                   </a>
                 )}

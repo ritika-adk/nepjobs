@@ -18,7 +18,7 @@ function Home() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/jobs/")
+    fetch(`${import.meta.env.VITE_API_URL}/api/jobs/`)
       .then(res => res.json())
       .then(data => {
         setJobs(data)
@@ -95,7 +95,7 @@ function Home() {
           <button
             onClick={() => navigate("/post-job")}
             className="border border-blue-600 text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-50">
-            For Employers →
+            Post Jobs →
           </button>
           <button
             onClick={() => navigate("/dashboard")}

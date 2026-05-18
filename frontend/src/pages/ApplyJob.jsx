@@ -22,7 +22,7 @@ function ApplyJob() {
       formData.append("cv", cv)
       formData.append("cover_letter", coverLetter)
 
-      const res = await fetch(`http://127.0.0.1:8000/api/jobs/${id}/apply/`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs/${id}/apply/`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`
