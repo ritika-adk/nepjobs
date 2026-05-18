@@ -126,3 +126,7 @@ SIMPLE_JWT = {
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Auto create superuser
+SUPERUSER_USERNAME = os.environ.get('admin', '')
+SUPERUSER_EMAIL = os.environ.get('admin@gmail.com', '')
+SUPERUSER_PASSWORD = os.environ.get('admin@100%', '')
