@@ -6,18 +6,14 @@ from datetime import timedelta
 
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-jg%w!+tlf6r35mwv2i&5gw9&#np2=bpbtnw0w6vz&lxsj)te@)')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
-# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -29,6 +25,8 @@ INSTALLED_APPS = [
     # Third party
     'rest_framework',
     'corsheaders',
+    'cloudinary',
+    'cloudinary_storage',
 
     # Our apps
     'accounts',
@@ -66,7 +64,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'nepjobs.wsgi.application'
 
-# Database
 DATABASES = {
     'default': dj_database_url.config(
         default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
@@ -74,7 +71,6 @@ DATABASES = {
     )
 }
 
-# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -90,7 +86,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -101,9 +96,14 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media files
+# Cloudinary settings
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', ''),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', ''),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', ''),
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # CORS
 cors_origins = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:5173')
@@ -126,7 +126,8 @@ SIMPLE_JWT = {
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # Auto create superuser
-SUPERUSER_USERNAME = os.environ.get('admin', '')
-SUPERUSER_EMAIL = os.environ.get('admin@gmail.com', '')
-SUPERUSER_PASSWORD = os.environ.get('admin@100%', '')
+SUPERUSER_USERNAME = os.environ.get('SUPERUSER_USERNAME', 'admin')
+SUPERUSER_EMAIL = os.environ.get('SUPERUSER_EMAIL', 'admin@gmail.com')
+SUPERUSER_PASSWORD = os.environ.get('SUPERUSER_PASSWORD', 'admin1234')
